@@ -2,32 +2,39 @@ public class PalindromeCheckerApp {
 
     public static void main(String[] args) {
 
-        System.out.println("=====================================");
-        System.out.println("   Palindrome Checker App - UC9");
-        System.out.println("=====================================");
+        System.out.println("==============================================");
+        System.out.println(" Palindrome Checker App - UC10");
+        System.out.println("==============================================");
 
-        String original = "madam";
+        String original = "Madam In Eden Im Adam";
 
-        boolean result = isPalindrome(original, 0, original.length() - 1);
 
-        if (result) {
-            System.out.println(original + " is a Palindrome.");
+        String normalized = original
+                .toLowerCase()                 // ignore case
+                .replaceAll("\\s+", "");       // remove spaces
+
+        boolean isPalindrome = true;
+
+        int left = 0;
+        int right = normalized.length() - 1;
+
+
+        while (left < right) {
+            if (normalized.charAt(left) != normalized.charAt(right)) {
+                isPalindrome = false;
+                break;
+            }
+            left++;
+            right--;
+        }
+
+        if (isPalindrome) {
+            System.out.println("\"" + original + "\" is a Palindrome (ignoring case & spaces).");
         } else {
-            System.out.println(original + " is NOT a Palindrome.");
+            System.out.println("\"" + original + "\" is NOT a Palindrome.");
         }
 
-        System.out.println("=====================================");
+        System.out.println("==============================================");
         System.out.println("Program Ended.");
-    }
-
-
-    public static boolean isPalindrome(String str, int start, int end) {
-        if (start >= end) {
-            return true;
-        }
-        if (str.charAt(start) != str.charAt(end)) {
-            return false;
-        }
-        return isPalindrome(str, start + 1, end - 1);
     }
 }
