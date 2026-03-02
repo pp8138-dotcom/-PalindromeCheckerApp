@@ -1,15 +1,26 @@
+import java.util.Stack;
+import java.util.Deque;
+import java.util.LinkedList;
+
 public class PalindromeCheckerApp {
 
     public static void main(String[] args) {
 
-        System.out.println("==============================================");
-        System.out.println(" Palindrome Checker App - UC11 (OOP Version)");
-        System.out.println("==============================================");
+        System.out.println("=================================================");
+        System.out.println(" Palindrome Checker App - UC12 (Strategy Pattern)");
+        System.out.println("=================================================");
 
         String input = "madam";
-        PalindromeChecker checker = new PalindromeChecker();
 
-        boolean result = checker.checkPalindrome(input);
+
+        PalindromeStrategy strategy;
+
+
+        strategy = new StackStrategy();
+
+        PalindromeService service = new PalindromeService(strategy);
+
+        boolean result = service.check(input);
 
         if (result) {
             System.out.println(input + " is a Palindrome.");
@@ -17,25 +28,67 @@ public class PalindromeCheckerApp {
             System.out.println(input + " is NOT a Palindrome.");
         }
 
-        System.out.println("==============================================");
+        System.out.println("=================================================");
         System.out.println("Program Ended.");
     }
 }
-class PalindromeChecker {
+interface PalindromeStrategy {
+    boolean check(String str);
+}
+class StackStrategy implements PalindromeStrategy {
 
-    public boolean checkPalindrome(String str) {
+    @Override
+    public boolean check(String str) {
 
-        int left = 0;
-        int right = str.length() - 1;
+        Stack<Character> stack = new Stack<>();
 
-        while (left < right) {
-            if (str.charAt(left) != str.charAt(right)) {
+        for (char c : str.toCharArray()) {
+            stack.push(c);
+        }
+
+        for (char c : str.toCharArray()) {
+            if (c != stack.pop()) {
                 return false;
             }
-            left++;
-            right--;
         }
 
         return true;
+    }
+}
+
+
+class DequeStrategy implements PalindromeStrategy {
+
+    @Override
+    public boolean check(String str) {
+
+        Deque<Character> deque = new LinkedList<>();
+
+        for (char c : str.toCharArray()) {
+            deque.addLast(c);
+        }
+
+        while (deque.size() > 1) {
+            if (deque.removeFirst() != deque.removeLast()) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+}
+
+
+class PalindromeService {
+
+    private PalindromeStrategy strategy;
+
+
+    public PalindromeService(PalindromeStrategy strategy) {
+        this.strategy = strategy;
+    }
+
+    public boolean check(String str) {
+        return strategy.check(str);
     }
 }
