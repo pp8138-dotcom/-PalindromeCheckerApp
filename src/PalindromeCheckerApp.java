@@ -1,27 +1,62 @@
-import java.util.Deque;
-import java.util.LinkedList;
-
 public class PalindromeCheckerApp {
+    static class Node {
+        char data;
+        Node next;
+
+        Node(char data) {
+            this.data = data;
+            this.next = null;
+        }
+    }
 
     public static void main(String[] args) {
 
         System.out.println("=====================================");
-        System.out.println("   Palindrome Checker App - UC7");
+        System.out.println("   Palindrome Checker App - UC8");
         System.out.println("=====================================");
 
         String original = "madam";
+        Node head = null;
+        Node tail = null;
 
-        Deque<Character> deque = new LinkedList<>();
         for (int i = 0; i < original.length(); i++) {
-            deque.addLast(original.charAt(i));
+            Node newNode = new Node(original.charAt(i));
+            if (head == null) {
+                head = newNode;
+                tail = newNode;
+            } else {
+                tail.next = newNode;
+                tail = newNode;
+            }
         }
+        Node slow = head;
+        Node fast = head;
+
+        while (fast != null && fast.next != null) {
+            slow = slow.next;
+            fast = fast.next.next;
+        }
+        Node prev = null;
+        Node current = slow;
+
+        while (current != null) {
+            Node nextNode = current.next;
+            current.next = prev;
+            prev = current;
+            current = nextNode;
+        }
+        Node firstHalf = head;
+        Node secondHalf = prev;
 
         boolean isPalindrome = true;
-        while (deque.size() > 1) {
-            if (deque.removeFirst() != deque.removeLast()) {
+
+        while (secondHalf != null) {
+            if (firstHalf.data != secondHalf.data) {
                 isPalindrome = false;
                 break;
             }
+            firstHalf = firstHalf.next;
+            secondHalf = secondHalf.next;
         }
 
         if (isPalindrome) {
