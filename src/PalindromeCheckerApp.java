@@ -1,20 +1,28 @@
-public class UseCase3PalindromeCheckerApp {
+import java.util.Scanner;
+
+public class PalindromeCheckerApp {
 
     public static void main(String[] args) {
 
-        System.out.println("Palindrome Checker App - UC3");
-        System.out.println("----------------------------------");
-        String original = "level";
+        System.out.println("Palindrome Checker App - UC4");
+
+        Scanner sc = new Scanner(System.in);
+
+        System.out.print("Enter a string: ");
+        String original = sc.nextLine();
+
         String reversed = "";
-        for (int i = original.length() - 1; i >= 0; i--) {
-            reversed = reversed + original.charAt(i);
+
+        for(int i = original.length() - 1; i >= 0; i--) {
+            reversed += original.charAt(i);
         }
-        if (original.equals(reversed)) {
-            System.out.println("The string \"" + original + "\" is a Palindrome.");
+
+        if(original.equals(reversed)) {
+            System.out.println(original + " is a Palindrome.");
         } else {
-            System.out.println("The string \"" + original + "\" is NOT a Palindrome.");
+            System.out.println(original + " is NOT a Palindrome.");
         }
-        System.out.println("----------------------------------");
-        System.out.println("Program Ended.");
+
+        sc.close();
     }
 }
