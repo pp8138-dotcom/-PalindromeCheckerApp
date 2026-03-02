@@ -3,38 +3,39 @@ public class PalindromeCheckerApp {
     public static void main(String[] args) {
 
         System.out.println("==============================================");
-        System.out.println(" Palindrome Checker App - UC10");
+        System.out.println(" Palindrome Checker App - UC11 (OOP Version)");
         System.out.println("==============================================");
 
-        String original = "Madam In Eden Im Adam";
+        String input = "madam";
+        PalindromeChecker checker = new PalindromeChecker();
 
+        boolean result = checker.checkPalindrome(input);
 
-        String normalized = original
-                .toLowerCase()                 // ignore case
-                .replaceAll("\\s+", "");       // remove spaces
+        if (result) {
+            System.out.println(input + " is a Palindrome.");
+        } else {
+            System.out.println(input + " is NOT a Palindrome.");
+        }
 
-        boolean isPalindrome = true;
+        System.out.println("==============================================");
+        System.out.println("Program Ended.");
+    }
+}
+class PalindromeChecker {
+
+    public boolean checkPalindrome(String str) {
 
         int left = 0;
-        int right = normalized.length() - 1;
-
+        int right = str.length() - 1;
 
         while (left < right) {
-            if (normalized.charAt(left) != normalized.charAt(right)) {
-                isPalindrome = false;
-                break;
+            if (str.charAt(left) != str.charAt(right)) {
+                return false;
             }
             left++;
             right--;
         }
 
-        if (isPalindrome) {
-            System.out.println("\"" + original + "\" is a Palindrome (ignoring case & spaces).");
-        } else {
-            System.out.println("\"" + original + "\" is NOT a Palindrome.");
-        }
-
-        System.out.println("==============================================");
-        System.out.println("Program Ended.");
+        return true;
     }
 }
